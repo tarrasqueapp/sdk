@@ -1,0 +1,5 @@
+{
+  "extends": "@tarrasque/tsconfig/react",
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
+  "exclude": ["node_modules"]
+}

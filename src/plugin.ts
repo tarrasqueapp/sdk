@@ -3,6 +3,9 @@ interface TarrasquePluginProps {
   name: string;
   version: string;
   components?: {
+    // The component that will be rendered when the user clicks on the plugin in the plugin list
+    plugin?: JSX.Element | null;
+    // The component that will be rendered in the dock of the map view
     dock?: JSX.Element | null;
   };
 }
@@ -10,7 +13,10 @@ interface TarrasquePluginProps {
 export class TarrasquePlugin implements TarrasquePluginProps {
   name = '';
   version = '0.0.0';
-  components = { dock: null };
+  components = {
+    plugin: null,
+    dock: null,
+  };
 
   /**
    * Creates an instance of TarrasquePlugin.

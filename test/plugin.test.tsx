@@ -19,7 +19,7 @@ it('initializes with basic config', () => {
 });
 
 it('initializes with config and components', () => {
-  const DockItem = () => {
+  const Plugin = () => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => {
       setMounted(true);
@@ -31,10 +31,10 @@ it('initializes with config and components', () => {
     name: 'example-plugin',
     version: '1.0.0',
     components: {
-      dock: <DockItem />,
+      plugin: <Plugin />,
     },
   });
 
-  const component = render(plugin.components.dock!);
+  const component = render(plugin.components.plugin!);
   expect(component).toMatchSnapshot();
 });

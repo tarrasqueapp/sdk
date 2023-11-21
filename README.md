@@ -11,7 +11,7 @@ This package contains the core logic for the Tarrasque SDK. You can use this pac
 ## Installation
 
 ```sh
-yarn add @tarrasque/sdk
+npm install @tarrasque/sdk
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ yarn add @tarrasque/sdk
 ```ts
 import { TarrasqueEvent, tarrasque } from '@tarrasque/sdk';
 
-tarrasque.on(TarrasqueEvent.CREATED_CHARACTER, (payload) => {
+tarrasque.on(TarrasqueEvent.PINGED_LOCATION, (payload) => {
   // Do something with the payload
 });
 ```
@@ -31,8 +31,8 @@ tarrasque.on(TarrasqueEvent.CREATED_CHARACTER, (payload) => {
 ```ts
 import { TarrasqueEvent, tarrasque } from '@tarrasque/sdk';
 
-tarrasque.emit(TarrasqueEvent.CREATE_CHARACTER, {
-  name: 'My Character',
+tarrasque.emit(TarrasqueEvent.PING_LOCATION, {
+  coordinates: { x: 23, y: 42},
   ...
 });
 ```
@@ -40,10 +40,25 @@ tarrasque.emit(TarrasqueEvent.CREATE_CHARACTER, {
 ### Creating a plugin
 
 ```ts
-import { TarrasquePlugin } from '@tarrasque/sdk';
+import { TarrasqueEvent, TarrasquePlugin, tarrasque } from '@tarrasque/sdk';
 
-export default new TarrasquePlugin({
-  name: '@tarrasque/dnd5e-plugin',
+export default class ExamplePlugin extends TarrasquePlugin {
+  name: '@tarrasque/example-plugin',
   version: '1.0.0',
-});
+  title = 'Example Plugin';
+  description = 'An example plugin for Tarrasque';
+  author = 'Tarrasque App';
+
+  constructor() {
+    super();
+
+    tarrasque.on(TarrasqueEvent.PINGED_LOCATION, (data) => {
+      console.log('Location pinged!', data);
+    });
+  }
+
+  renderDockElement() {
+    return <div>Example Plugin</div>;
+  }
+}
 ```

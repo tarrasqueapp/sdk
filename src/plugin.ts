@@ -1,28 +1,20 @@
-// The properties that a Tarrasque plugin can have
-interface TarrasquePluginProps {
-  name: string;
-  version: string;
-  components?: {
-    // The component that will be rendered when the user clicks on the plugin in the plugin list
-    plugin?: JSX.Element | null;
-    // The component that will be rendered in the dock of the map view
-    dock?: JSX.Element | null;
-  };
-}
-
-export class TarrasquePlugin implements TarrasquePluginProps {
+export class TarrasquePlugin {
   name = '';
   version = '0.0.0';
-  components = {
-    plugin: null,
-    dock: null,
-  };
+  title = '';
+  description = '';
+  author = '';
 
   /**
-   * Creates an instance of TarrasquePlugin.
-   * @param config - The configuration for the plugin
+   * Creates an instance of TarrasquePlugin
    */
-  constructor(config: TarrasquePluginProps) {
-    Object.assign(this, config);
+  constructor() {}
+
+  /**
+   * Renders the plugin's dock element
+   * @returns The dock element
+   */
+  renderDockElement(): JSX.Element {
+    return null;
   }
 }

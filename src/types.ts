@@ -4,78 +4,76 @@ export enum SetupStep {
   COMPLETED = 3,
 }
 
-export interface Setup {
+export class SetupEntity {
   step: SetupStep;
   completed: boolean;
 }
 
-export interface Plugin {
-  id: string;
-  name: string;
-  description: string;
-  version: string;
-  author?: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface User {
+export class UserEntity {
   id: string;
   name: string;
   displayName: string;
   email: string;
-  emailVerified: boolean;
+  isEmailVerified: boolean;
   // Avatar
-  avatar?: Media;
+  avatar?: MediaEntity;
   avatarId?: string;
   // Order of campaigns
   campaignOrder: string[];
   // DateTime
   createdAt: string;
   updatedAt: string;
-  // Plugins
-  plugins: Plugin[];
 }
 
-export interface CampaignInvite {
+export enum ActionTokenType {
+  VERIFY_EMAIL = 'VERIFY_EMAIL',
+  RESET_PASSWORD = 'RESET_PASSWORD',
+  INVITE = 'INVITE',
+}
+
+export class ActionTokenEntity {
   id: string;
+  type: ActionTokenType;
   email: string;
+  payload: Record<string, any>;
   // DateTime
-  createdAt: string;
+  createdAt: Date;
+  updatedAt: Date;
+  expiresAt: Date;
   // User
-  user?: User;
-  userId?: string;
+  user?: UserEntity | null;
+  userId: string | null;
   // Campaign
-  campaign?: Campaign;
-  campaignId: string;
+  campaign?: CampaignEntity | null;
+  campaignId: string | null;
 }
 
-export interface Campaign {
+export class CampaignEntity {
   id: string;
   name: string;
   // DateTime
   createdAt: string;
   updatedAt: string;
+  // Memberships
+  memberships: MembershipEntity[];
   // Created by
-  createdBy?: User;
+  createdBy: UserEntity;
   createdById: string;
-  // Members
-  members: CampaignMember[];
   // Invites
-  invites: CampaignInvite[];
+  invites: ActionTokenEntity[];
+  // Maps
+  maps: MapEntity[];
 }
 
-export enum CampaignMemberRole {
+export enum Role {
   GAME_MASTER = 'GAME_MASTER',
   PLAYER = 'PLAYER',
 }
 
-export interface CampaignMember {
-  id: string;
-  role: CampaignMemberRole;
+export class MembershipEntity {
+  role: Role;
   // User
-  user: User;
+  user: UserEntity;
   userId: string;
   // Campaign
   campaignId: string;
@@ -84,53 +82,66 @@ export interface CampaignMember {
   updatedAt: string;
 }
 
-export interface Map {
+export class MapEntity {
   id: string;
   name: string;
   // DateTime
   createdAt: string;
   updatedAt: string;
   // Media
-  media: Media[];
+  media: MediaEntity[];
   mediaIds: string[];
   selectedMediaId: string;
   // Campaign
-  campaign: Campaign;
+  campaign: CampaignEntity;
   campaignId: string;
   // Created by
-  createdBy: User;
+  createdBy: UserEntity;
   createdById: string;
+  // Tokens
+  tokens?: TokenEntity[];
 }
 
-export interface Character {
+export class CharacterEntity {
   id: string;
   name: string;
-  // Data
-  data: Record<string, unknown>;
   // DateTime
   createdAt: string;
   updatedAt: string;
-  // Media
-  media?: Media[];
-  mediaIds: string[];
-  // Created by
-  createdBy?: User;
-  createdById: string;
-  // Campaign
-  campaign?: Campaign;
-  campaignId: string;
   // Tokens
-  tokens?: Token[];
+  tokens?: TokenEntity[];
+  // Media
+  media?: MediaEntity[];
+  selectedMediaId: string;
+  // Created by
+  createdBy?: UserEntity;
+  createdById: string;
   // Controlled by
-  controlledBy?: User[];
+  controlledBy?: UserEntity[];
+  // Campaign
+  campaign?: CampaignEntity;
+  campaignId: string;
 }
 
-export interface Dimensions {
+export class DimensionsEntity {
   width: number;
   height: number;
 }
 
-export interface File {
+export class CoordinatesEntity {
+  x: number;
+  y: number;
+}
+
+export class PingLocationEntity {
+  id?: string;
+  coordinates: CoordinatesEntity;
+  color: string;
+  mapId: string;
+  userId: string;
+}
+
+export class FileEntity {
   id: string;
   name: string;
   type: string;
@@ -140,7 +151,7 @@ export interface File {
   height?: number;
 }
 
-export interface Media {
+export class MediaEntity {
   id: string;
   name: string;
   url: string;
@@ -154,11 +165,11 @@ export interface Media {
   createdAt: string;
   updatedAt: string;
   // Created by
-  createdBy: User;
+  createdBy: UserEntity;
   createdById: string;
 }
 
-export interface Token {
+export class TokenEntity {
   id: string;
   width: number;
   height: number;
@@ -168,12 +179,27 @@ export interface Token {
   createdAt: string;
   updatedAt: string;
   // User
-  createdBy: User;
+  createdBy: UserEntity;
   createdById: string;
   // Map
-  map: Map;
+  map: MapEntity;
   mapId: string;
   // Character
-  character?: Character;
+  character?: CharacterEntity;
   characterId?: string;
+}
+
+export enum NotificationTypeEnum {
+  INVITE = 'INVITE',
+}
+
+export class NotificationEntity {
+  userId: string;
+  type: NotificationTypeEnum;
+  data: { id: string };
+}
+
+export class InviteNotificationEntity extends NotificationEntity {
+  type = NotificationTypeEnum.INVITE;
+  declare data: ActionTokenEntity;
 }

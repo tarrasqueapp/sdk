@@ -1,5 +1,11 @@
 {
-  "extends": "@tarrasque/tsconfig/react",
+  "extends": "@tronite/tsconfig/nestjs",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "incremental": false,
+    "strictPropertyInitialization": false,
+    "jsx": "preserve"
+  },
   "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

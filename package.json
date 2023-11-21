@@ -25,12 +25,16 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "pnpm build --watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "tsc --noEmit && eslint .",
-    "release": "release-it"
+    "release": "release-it",
+    "prepack": "pnpm build"
   },
   "dependencies": {
     "path-to-regexp": "^6.2.1",

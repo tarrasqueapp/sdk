@@ -33,8 +33,7 @@
     "dev": "pnpm build --watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "tsc --noEmit && eslint .",
-    "release": "release-it",
-    "prepack": "pnpm build"
+    "release": "release-it"
   },
   "dependencies": {
     "path-to-regexp": "^6.2.1",

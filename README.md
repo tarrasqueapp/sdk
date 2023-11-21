@@ -14,51 +14,68 @@ This package contains the core logic for the Tarrasque SDK. You can use this pac
 npm install @tarrasque/sdk
 ```
 
+## Features
+
+The Tarrasque SDK offers a range of features, including:
+
+- Real-time event handling with Socket.IO
+- User, campaign, character, map, and notification management
+- Custom plugin development capabilities
+- Access cached client data from the Tarrasque API
+
 ## Usage
 
-### Listening for events
+### Listening for Events
+
+The SDK allows listening to various events, such as user updates, campaign changes, and map interactions:
 
 ```ts
 import { TarrasqueEvent, tarrasque } from '@tarrasque/sdk';
 
-tarrasque.on(TarrasqueEvent.PINGED_LOCATION, (payload) => {
-  // Do something with the payload
+tarrasque.on(TarrasqueEvent.USER_UPDATED, (userData) => {
+  // Handle user update
 });
 ```
 
-### Sending events
+### Emitting Events
+
+You can also emit events to perform actions like creating characters or joining rooms:
 
 ```ts
 import { TarrasqueEvent, tarrasque } from '@tarrasque/sdk';
 
-tarrasque.emit(TarrasqueEvent.PING_LOCATION, {
-  coordinates: { x: 23, y: 42},
+tarrasque.emit(TarrasqueEvent.CREATE_CHARACTER, {
+  name: 'Hero',
   ...
 });
 ```
 
-### Creating a plugin
+# Plugin Development
+
+Develop custom plugins by extending the `TarrasquePlugin` class:
 
 ```ts
 import { TarrasqueEvent, TarrasquePlugin, tarrasque } from '@tarrasque/sdk';
 
-export default class ExamplePlugin extends TarrasquePlugin {
-  name: '@tarrasque/example-plugin',
+export default class CustomPlugin extends TarrasquePlugin {
+  name: '@tarrasque/custom-plugin',
   version: '1.0.0',
-  title = 'Example Plugin';
-  description = 'An example plugin for Tarrasque';
-  author = 'Tarrasque App';
+  title = 'Custom Plugin';
+  description = 'A custom plugin for Tarrasque';
+  author = 'Developer';
 
   constructor() {
     super();
-
-    tarrasque.on(TarrasqueEvent.PINGED_LOCATION, (data) => {
-      console.log('Location pinged!', data);
+    // Event handling
+    tarrasque.on(TarrasqueEvent.MAP_UPDATED, (mapData) => {
+      console.log('Map updated', mapData);
     });
   }
 
   renderDockElement() {
-    return <div>Example Plugin</div>;
+    return <div>Custom Plugin UI</div>;
   }
 }
 ```
+
+For an example of a custom plugin, see the [Example Plugin](https://github.com/tarrasqueapp/example-plugin) repository.

@@ -1,0 +1,9 @@
+{
+  "id": "typescript-example",
+  "name": "TypeScript Example",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "version": "1.0.0",
+  "icon": "icon.svg",
+  "plugin_url": "http://localhost:5173",
+  "homepage_url": "https://github.com/tarrasqueapp/sdk/tree/main/examples/typescript"
+}

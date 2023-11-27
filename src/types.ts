@@ -1,147 +1,94 @@
-export enum SetupStep {
-  DATABASE = 1,
-  USER = 2,
-  COMPLETED = 3,
-}
-
-export class SetupEntity {
-  step: SetupStep;
-  completed: boolean;
-}
-
-export class UserEntity {
+export type User = {
   id: string;
   name: string;
   displayName: string;
   email: string;
-  isEmailVerified: boolean;
   // Avatar
-  avatar?: MediaEntity;
+  avatar?: Media;
   avatarId?: string;
-  // Order of campaigns
-  campaignOrder: string[];
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
-}
+};
 
-export enum ActionTokenType {
-  VERIFY_EMAIL = 'VERIFY_EMAIL',
-  RESET_PASSWORD = 'RESET_PASSWORD',
-  INVITE = 'INVITE',
-}
-
-export class ActionTokenEntity {
-  id: string;
-  type: ActionTokenType;
-  email: string;
-  payload: Record<string, any>;
-  // DateTime
-  createdAt: Date;
-  updatedAt: Date;
-  expiresAt: Date;
-  // User
-  user?: UserEntity | null;
-  userId: string | null;
-  // Campaign
-  campaign?: CampaignEntity | null;
-  campaignId: string | null;
-}
-
-export class CampaignEntity {
+export type Campaign = {
   id: string;
   name: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
   // Memberships
-  memberships: MembershipEntity[];
+  memberships: Membership[];
   // Created by
-  createdBy: UserEntity;
+  createdBy: User;
   createdById: string;
-  // Invites
-  invites: ActionTokenEntity[];
   // Maps
-  maps: MapEntity[];
-}
+  maps: Map[];
+};
 
 export enum Role {
   GAME_MASTER = 'GAME_MASTER',
   PLAYER = 'PLAYER',
 }
 
-export class MembershipEntity {
+export type Membership = {
   role: Role;
+  color: string;
   // User
-  user: UserEntity;
+  user: User;
   userId: string;
   // Campaign
   campaignId: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
-}
+};
 
-export class MapEntity {
+export type Map = {
   id: string;
   name: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
   // Media
-  media: MediaEntity[];
+  media: Media[];
   mediaIds: string[];
   selectedMediaId: string;
   // Campaign
-  campaign: CampaignEntity;
+  campaign: Campaign;
   campaignId: string;
   // Created by
-  createdBy: UserEntity;
+  createdBy: User;
   createdById: string;
   // Tokens
-  tokens?: TokenEntity[];
-}
+  tokens?: Token[];
+};
 
-export class CharacterEntity {
+export type Character = {
   id: string;
   name: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
   // Tokens
-  tokens?: TokenEntity[];
+  tokens?: Token[];
   // Media
-  media?: MediaEntity[];
+  media?: Media[];
   selectedMediaId: string;
   // Created by
-  createdBy?: UserEntity;
+  createdBy?: User;
   createdById: string;
   // Controlled by
-  controlledBy?: UserEntity[];
+  controlledBy?: User[];
   // Campaign
-  campaign?: CampaignEntity;
+  campaign?: Campaign;
   campaignId: string;
-}
+};
 
-export class DimensionsEntity {
+export type Dimensions = {
   width: number;
   height: number;
-}
+};
 
-export class CoordinatesEntity {
+export type Position = {
   x: number;
   y: number;
-}
+};
 
-export class PingLocationEntity {
+export type PingLocation = {
   id?: string;
-  coordinates: CoordinatesEntity;
+  position: Position;
   color: string;
   mapId: string;
   userId: string;
-}
+};
 
-export class FileEntity {
+export type File = {
   id: string;
   name: string;
   type: string;
@@ -149,9 +96,9 @@ export class FileEntity {
   size: number;
   width?: number;
   height?: number;
-}
+};
 
-export class MediaEntity {
+export type Media = {
   id: string;
   name: string;
   url: string;
@@ -161,45 +108,24 @@ export class MediaEntity {
   size: number;
   format: string;
   extension: string;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
   // Created by
-  createdBy: UserEntity;
+  createdBy: User;
   createdById: string;
-}
+};
 
-export class TokenEntity {
+export type Token = {
   id: string;
   width: number;
   height: number;
   x: number;
   y: number;
-  // DateTime
-  createdAt: string;
-  updatedAt: string;
   // User
-  createdBy: UserEntity;
+  createdBy: User;
   createdById: string;
   // Map
-  map: MapEntity;
+  map: Map;
   mapId: string;
   // Character
-  character?: CharacterEntity;
+  character?: Character;
   characterId?: string;
-}
-
-export enum NotificationTypeEnum {
-  INVITE = 'INVITE',
-}
-
-export class NotificationEntity {
-  userId: string;
-  type: NotificationTypeEnum;
-  data: { id: string };
-}
-
-export class InviteNotificationEntity extends NotificationEntity {
-  type = NotificationTypeEnum.INVITE;
-  declare data: ActionTokenEntity;
-}
+};

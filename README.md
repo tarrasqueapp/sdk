@@ -1,12 +1,16 @@
-<h1 align="center">
-  <a href="https://tarrasque.app" target="_blank"><img src="https://tarrasque.app/images/logo.svg" width="150" /></a>
-  <p>@tarrasque/sdk</p>
+<p align="center">
+  <a href="https://tarrasque.app">
+    <img src="https://tarrasque.app/images/logo.svg" width="150" />
+  </a>
 
-![npm](https://img.shields.io/npm/v/%40tarrasque%2Fsdk)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/tarrasqueapp/sdk/release.yaml)
-![GitHub](https://img.shields.io/github/license/tarrasqueapp/sdk)
+  <h1 align="center">@tarrasque/sdk</h1>
+</p>
 
-</h1>
+<p align="center">
+  <img src="https://img.shields.io/npm/v/%40tarrasque%2Fsdk" />
+  <img src="https://img.shields.io/github/actions/workflow/status/tarrasqueapp/sdk/release.yaml" />
+  <img src="https://img.shields.io/github/license/tarrasqueapp/sdk" />
+</p>
 
 This package contains the core logic for the Tarrasque SDK. You can use this package to build your own custom plugins for Tarrasque App.
 

@@ -111,10 +111,10 @@ export const tarrasque = {
    * });
    * unregisterListener();
    */
-  _listen(callback: (event: MessageEvent) => () => unknown): () => void {
+  _listen(callback: (message: MessageEvent['data']) => () => unknown): () => void {
     // Listen for messages from child windows
     const listener = (event: MessageEvent) => {
-      const message = event.data;
+      const message = event.data as { event: string; data?: unknown };
       if (!message.event) return;
 
       // Run the callback to get the event handler

@@ -5,23 +5,24 @@ import './style.css';
 let campaign: Campaign;
 
 async function main() {
-  console.log('⬆🔌', campaign?.name);
+  tarrasque.emit('VIEWPORT_SET_POSITION', { x: 0, y: 0 });
+  tarrasque.emit('VIEWPORT_SET_SCALE', 1);
 
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div>
       <p>
-        Hi ${campaign.name}
+        Hi ${campaign?.name}
       </p>
     </div>
   `;
 }
 
-tarrasque.onReady(async () => {
-  campaign = await tarrasque.campaign.get();
+tarrasque.on('READY', async () => {
+  campaign = await tarrasque.get('CAMPAIGN');
   main();
 });
 
-tarrasque.campaign.onChange((updatedCampaign) => {
+tarrasque.on('CAMPAIGN_CHANGED', (updatedCampaign) => {
   campaign = updatedCampaign;
   main();
 });
@@ -29,6 +30,5 @@ tarrasque.campaign.onChange((updatedCampaign) => {
 // Re-render on HMR
 if (import.meta.hot) {
   import.meta.hot.accept();
-  campaign = await tarrasque.campaign.get();
-  main();
+  tarrasque.emit('READY');
 }

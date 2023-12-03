@@ -35,6 +35,11 @@ export class EventEmitter {
    */
   public postMessage(event: string, data?: unknown): void {
     console.debug('⬆️ Sending message', event);
+
+    // Emit the message to the local listeners
+    emitter.emit(event, data);
+
+    // Send the message to the parent window
     window.parent.postMessage({ event, data }, '*');
   }
 

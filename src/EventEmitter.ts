@@ -25,6 +25,8 @@ export class EventEmitter {
   private handleMessage(event: MessageEvent) {
     const message = event.data;
     console.debug('⬇️ Received event', message.event);
+
+    // Emit the message to the local listeners
     emitter.emit(message.event, message.data);
   }
 
@@ -35,9 +37,6 @@ export class EventEmitter {
    */
   public postMessage(event: string, data?: unknown): void {
     console.debug('⬆️ Sending message', event);
-
-    // Emit the message to the local listeners
-    emitter.emit(event, data);
 
     // Send the message to the parent window
     window.parent.postMessage({ event, data }, '*');
@@ -64,8 +63,14 @@ export class EventEmitter {
         resolve(response);
       };
 
+      // Emit the event to the local listeners
+      emitter.emit(event, data);
+
+      // Listen for the response from the parent window
       this.on(event, handler);
-      this.postMessage(event, data); // Use postMessage to send the event
+
+      // Send the message to the parent window
+      this.postMessage(event, data);
     });
   }
 

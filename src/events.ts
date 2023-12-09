@@ -29,6 +29,7 @@ export type Emitters = {
   VIEWPORT_ZOOM_IN: () => void;
   VIEWPORT_ZOOM_OUT: () => void;
   VIEWPORT_ZOOM_TO_FIT: () => void;
+  PING_LOCATION: (position: Position) => void;
 };
 
 export type EmitterCallback<T extends keyof Emitters> = Emitters[T] extends (...args: infer U) => void

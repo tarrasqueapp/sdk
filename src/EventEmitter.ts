@@ -36,7 +36,7 @@ export class EventEmitter {
    * @param data - The data to send with the event
    */
   public postMessage(event: string, data?: unknown): void {
-    console.debug('⬆️ Sending message', event);
+    console.debug('⬆️ Sending message', event, data);
 
     // Send the message to the parent window
     window.parent.postMessage({ event, data }, '*');

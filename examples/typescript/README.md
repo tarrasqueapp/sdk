@@ -1,19 +1,8 @@
-<h1 align="center">
-  <a href="https://tarrasque.app" target="_blank"><img src="https://tarrasque.app/images/logo.svg" width="150" /></a>
-  <p>@tarrasque/example-plugin</p>
-</h1>
+<p align="center">
+  <h1 align="center">typescript-example</h1>
+</p>
 
 This is an example plugin for Tarrasque App, showcasing how to use the [Tarrasque SDK](https://github.com/tarrasqueapp/sdk) to build your own plugins.
-
-# Overview
-
-`@tarrasque/example-plugin` is a basic implementation designed to illustrate the fundamental concepts and functionalities available in the Tarrasque SDK. It includes event handling, custom dock elements, and event emission.
-
-# Features
-
-- **Event Listening:** Shows the campaign name in the plugin's dock element.
-- **Dock Element Rendering:** Provides a user interface element in the dock.
-- **Event Emission:** (TODO) Emits an event when the user clicks on the dock element.
 
 # Prerequisites
 

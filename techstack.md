@@ -38,7 +38,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [tarrasqueapp/sdk](https://github.com/tarrasqueapp/sdk)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|16<br/>Tools used|12/27/23 <br/>Report generated|
+|18<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -159,13 +159,15 @@ Full tech stack [here](/techstack.md)
 </table>
 
 
-## <img src='https://img.stackshare.io/group.svg' /> Open source packages (4)</h2>
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (6)</h2>
 
-## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (4)
+## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (6)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
 |[@types/node](https://www.npmjs.com/@types/node)|v20.10.2|12/03/23|Richard Solomou |MIT|N/A|
+|[husky](https://www.npmjs.com/husky)|v8.0.3|11/30/23|Richard Solomou |MIT|N/A|
+|[lint-staged](https://www.npmjs.com/lint-staged)|v15.1.0|12/03/23|Richard Solomou |MIT|N/A|
 |[mitt](https://www.npmjs.com/mitt)|v3.0.1|11/27/23|Richard Solomou |MIT|N/A|
 |[release-it](https://www.npmjs.com/release-it)|v17.0.0|11/30/23|Richard Solomou |MIT|N/A|
 |[vite](https://www.npmjs.com/vite)|v5.0.4|11/30/23|Richard Solomou |N/A|[CVE-2023-49293](https://github.com/advisories/GHSA-92r3-m2mg-pj97) (Moderate)|

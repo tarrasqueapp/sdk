@@ -1,12 +1,13 @@
-import { Campaign, tarrasque } from '@tarrasque/sdk';
+import { Tarrasque } from '@tarrasque/sdk';
 
 import './style.css';
 
-let campaign: Campaign;
+const tarrasque = new Tarrasque();
+let campaign;
 
 async function main() {
-  tarrasque.emit('VIEWPORT_SET_POSITION', { x: 0, y: 0 });
-  tarrasque.emit('VIEWPORT_SET_SCALE', 1);
+  tarrasque.emit('viewport-set-coordinates', { x: 0, y: 0 });
+  tarrasque.emit('viewport-set-scale', 1);
 
   document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div>
@@ -24,27 +25,23 @@ async function main() {
   const button = document.querySelector<HTMLButtonElement>('button')!;
   button.addEventListener('click', async () => {
     // Get the current map
-    const map = await tarrasque.get('MAP');
-
-    // Get the selected media from the map
-    const selectedMedia = map.media.find((media) => media.id === map.selectedMediaId);
-    if (!selectedMedia) return;
+    const map = await tarrasque.get('map');
 
     // Randomize the location of the ping
-    const x = Math.random() * selectedMedia.width;
-    const y = Math.random() * selectedMedia.height;
+    const x = Math.random() * map.media.width;
+    const y = Math.random() * map.media.height;
 
     // Send the ping location event to the parent window
-    tarrasque.emit('PING_LOCATION', { x, y });
+    tarrasque.emit('ping-location', { x, y });
   });
 }
 
-tarrasque.on('READY', async () => {
-  campaign = await tarrasque.get('CAMPAIGN');
+tarrasque.on('ready', async () => {
+  campaign = await tarrasque.get('campaign');
   main();
 });
 
-tarrasque.on('CAMPAIGN_CHANGED', (updatedCampaign) => {
+tarrasque.on('campaign-changed', (updatedCampaign) => {
   campaign = updatedCampaign;
   main();
 });
@@ -52,6 +49,6 @@ tarrasque.on('CAMPAIGN_CHANGED', (updatedCampaign) => {
 // Re-render on hot reload in development
 if (import.meta.hot) {
   import.meta.hot.accept();
-  tarrasque.emit('READY');
+  tarrasque.emit('ready');
   main();
 }

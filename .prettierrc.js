@@ -1,1 +1,1 @@
-module.exports = require('@tronite/prettier-config');
+module.exports = require('@tronite/style-guide/prettier');

@@ -33,38 +33,68 @@ Tarrasque SDK allows you to create custom plugins for Tarrasque App. These plugi
 
 Plugins are loaded into the app using an iframe. This allows you to use any technologies you want to build your plugin, including React, Vue, or good ol' HTML and JavaScript.
 
-All plugins must be hosted on a public website, such as GitHub Pages, Vercel, or Netlify. Once your plugin is ready, you can submit it to the [Plugins Repository](https://github.com/tarrasqueapp/plugins) to make it available to all Tarrasque users.
+All plugins must be hosted on a public website, such as [GitHub Pages](https://pages.github.com/), [Vercel](https://vercel.com), or [Netlify](https://netlify.com). Once your plugin is ready, you can submit it to the [Plugins Repository](https://github.com/tarrasqueapp/plugins) to make it available to all Tarrasque users.
 
-Plugins must include a `manifest.json` file, which contains information about the plugin, such as its name, description, and version. This file must be located at the root of the plugin's website.
+Plugins must include a `manifest.json` file, which contains information about the plugin, such as its name, description, and URLs. This file must be located at the root of the plugin's public directory.
+
+Here's an example of a `manifest.json` file, based on the [Dungeons & Dragons 5th Edition plugin](https://github.com/tarrasqueapp/dnd5e):
 
 ```json
 {
-  "id": "typescript-example",
-  "name": "TypeScript Example",
-  "description": "A simple example of a Tarrasque App plugin written in TypeScript",
+  // A unique identifier for the plugin (usually in the format `username/repo`)
+  "id": "tarrasqueapp/dnd5e",
+  // The title of the plugin
+  "name": "Dungeons & Dragons 5th Edition",
+  // A short description of the plugin
+  "description": "A plugin for the Dungeons & Dragons 5th Edition ruleset",
+  // The name of the plugin's author
   "author": "Tarrasque App",
-  "homepage_url": "https://github.com/tarrasqueapp/sdk/tree/main/examples/typescript",
-  "plugin_url": "http://localhost:5173",
-  "icon": "http://localhost:5173/typescript.svg",
-  "iframe": {
-    "width": 500,
-    "height": 500
-  }
+  // An array of URLs where the plugin's files can be accessed
+  "urls": [
+    // The image file that will be used as the plugin's icon (at least 32x32 pixels)
+    {
+      "name": "icon",
+      "url": "https://dnd5e.tarrasque.app/icon.svg"
+    },
+    // The URL that will be used to load the plugin in the map overlay
+    // Optional, only needed if the plugin displays a map overlay (e.g. dice roller, character sheet, etc.)
+    {
+      "name": "map_iframe",
+      "url": "https://dnd5e.tarrasque.app/overlay",
+      // The width and height of the iframe where the plugin will be shown
+      "width": 300,
+      "height": 300
+    },
+    // The URL that will be used to load the plugin in the compendium
+    // Optional, only needed if the plugin has compendium data (e.g. spells, monsters, abilities, etc.)
+    {
+      "name": "compendium_iframe",
+      "url": "https://dnd5e.tarrasque.app/compendium"
+    },
+    // The URL of the plugin's repository or documentation for more information (optional)
+    {
+      "name": "homepage",
+      "url": "https://github.com/tarrasqueapp/dnd5e"
+    }
+  ]
 }
 ```
 
-For an example of a custom plugin, see the [examples folder](https://github.com/tarrasqueapp/sdk/tree/main/examples).
+For an example of another custom plugin, see the [examples folder](https://github.com/tarrasqueapp/sdk/tree/main/examples).
 
 ## Usage
+
+A full list of events used, emitted, and listened to by Tarrasque App can be found in the [main repository](https://github.com/tarrasqueapp/tarrasqueapp).
 
 ### Listening for Events
 
 The SDK allows listening to various events, such as campaign changes and map interactions:
 
 ```ts
-import { tarrasque } from '@tarrasque/sdk';
+import { Tarrasque } from '@tarrasque/sdk';
 
-tarrasque.on('VIEWPORT_CHANGED', (data) => {
+const tarrasque = new Tarrasque();
+tarrasque.on('viewport-changed', (data) => {
   // Handle viewport update
 });
 ```
@@ -74,9 +104,23 @@ tarrasque.on('VIEWPORT_CHANGED', (data) => {
 You can fetch data from the Tarrasque API using the `get` method:
 
 ```ts
-import { tarrasque } from '@tarrasque/sdk';
+import { Tarrasque } from '@tarrasque/sdk';
 
-const position = await tarrasque.get('VIEWPORT_POSITION');
+const tarrasque = new Tarrasque();
+const coordinates = await tarrasque.get('viewport-coordinates');
+```
+
+### Listening For Events
+
+You can listen for events to perform actions like updating the UI or fetching data:
+
+```ts
+import { Tarrasque } from '@tarrasque/sdk';
+
+const tarrasque = new Tarrasque();
+tarrasque.on('viewport-changed', (data) => {
+  // Handle viewport update
+});
 ```
 
 ### Emitting Events
@@ -84,17 +128,15 @@ const position = await tarrasque.get('VIEWPORT_POSITION');
 You can also emit events to perform actions like creating characters, moving the viewport, or updating the map:
 
 ```ts
-import { tarrasque } from '@tarrasque/sdk';
+import { Tarrasque } from '@tarrasque/sdk';
 
-tarrasque.emit('VIEWPORT_SET_POSITION', {
-  x: 0,
-  y: 0,
-});
+const tarrasque = new Tarrasque();
+tarrasque.emit('viewport-set-coordinates', { x: 0, y: 0 });
 ```
 
 ## Contributing
 
-Contributions are welcome! Please see the [CONTRIBUTING](https://github.com/tarrasqueapp/tarrasqueapp/tree/main/CONTRIBUTING.md) file for more information. If you have any questions, feel free to reach out to us on [Discord](https://tarrasque.app/discord). We'd love to hear from you! 😊
+Contributions are welcome! Please see the [CONTRIBUTING](https://github.com/tarrasqueapp/.github/tree/main/CONTRIBUTING.md) file for more information. If you have any questions, feel free to reach out to us on [Discord](https://tarrasque.app/discord). We'd love to hear from you! 😊
 
 ## License
 
